@@ -51,5 +51,6 @@ Module.symvers
 Mkfile.old
 dkms.conf
 .idea/
-cmake-build-debug
+cmake-build-debug/
 test.c
+CMakeLists.txt

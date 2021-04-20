@@ -72,8 +72,8 @@ int	fexec_cmd_export(char **args, t_dict **envp)
 		{
 			if (export_valcheck(args[i]) == false)
 			{
-				i++;
 				cmd_err("export", args[i], "is not a valid identifier");
+				i++;
 				continue ;
 			}
 			cmd_export_ext(args[i], envp);

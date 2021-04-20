@@ -150,7 +150,7 @@ void		term_d(t_buffer *b);
 int			term_enter(t_buffer *b);
 void		term_symbol(t_buffer *b);
 int			ft_only_ch(char const *str, char c);
-int			ft_skip_fl(char **args, char f);
+int			ft_is_flag(char *args, char f);
 void		free_2(void *p);
 size_t		strlen_2(char **arr);
 t_dict		*envp_to_dict(char **envp);

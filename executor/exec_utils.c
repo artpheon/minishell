@@ -66,25 +66,17 @@ int	ft_only_ch(char const *str, char c)
 	return (1);
 }
 
-int	ft_skip_fl(char **args, char f)
+int	ft_is_flag(char *args, char f)
 {
 	int	w;
 
-	w = 1;
-	if (args[w] == NULL)
-		return (1);
-	while (*args[w] == '-')
+	w = 0;
+	if (args[w] == '-')
 	{
-		if (ft_only_ch(++(args[w]), f))
-		{
-			--(args[w]);
-			w++;
-		}
-		else
-		{
-			--(args[w]);
-			return (w);
-		}
+		if (ft_only_ch((args + 1), f))
+			return (0);
+		return (1);
 	}
-	return (w);
+	else
+		return (1);
 }

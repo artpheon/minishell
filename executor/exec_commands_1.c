@@ -26,9 +26,7 @@ int	fexec_cmd_cd(char **args, t_dict **envp)
 	char	*pwd_old;
 	char	*arg;
 
-	if (args[1] == NULL)
-		cmd_err("cd", NULL, EXARG);
-	else
+	if (args[1] != NULL)
 	{
 		pwd_old = getcwd(NULL, 0);
 		arg = fexec_subtild(args[1], dict_getval(envp, "HOME"));
@@ -36,12 +34,13 @@ int	fexec_cmd_cd(char **args, t_dict **envp)
 		{
 			free(pwd_old);
 			free(arg);
-			cmd_err("cd", args[1], strerror(errno));
+			return (cmd_err("cd", args[1], strerror(errno)));
 		}
 		else
 			return (cmd_cd_success(envp, pwd_old, arg));
 	}
-	return (1);
+	else
+		return (cmd_err("cd", NULL, EXARG));
 }
 
 int	fexec_cmd_help(char **args, t_dict **envp)
@@ -80,16 +79,23 @@ int	fexec_cmd_echo(char **args, t_dict **envp)
 
 	(void)envp;
 	newln = 1;
-	w = ft_skip_fl(args, 'n');
+	w = 1;
+	while (args[w])
+	{
+		if (ft_is_flag(args[w], 'n'))
+			break ;
+		w++;
+	}
 	if (w > 1)
 		newln = 0;
 	while (args[w])
 	{
-		ft_putstr_fd(args[w++], 1);
+		ft_putstr_fd(args[w], STDOUT_FILENO);
+		w++;
 		if (args[w])
-			ft_putchar_fd(' ', 1);
+			ft_putstr_fd(" ", STDOUT_FILENO);
 	}
 	if (newln)
-		ft_putchar_fd('\n', 1);
+		ft_putendl_fd("", STDOUT_FILENO);
 	return (0);
 }

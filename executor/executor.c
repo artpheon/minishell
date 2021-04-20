@@ -31,8 +31,8 @@ void	exec_fork_only(t_sh *sh, t_cmd *cmd, t_io_params *p)
 	io_setout(cmd, &p->fdout);
 	dup2(p->fdin, STDIN_FILENO);
 	dup2(p->fdout, STDOUT_FILENO);
-	ret = fexec_cmd(sh, cmd->arg);
-	if (ret == 2)
+	sh->background = fexec_cmd(sh, cmd->arg);
+	if (sh->background == 2)
 	{
 		pid = fork();
 		if (pid == 0)

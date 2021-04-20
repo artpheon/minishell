@@ -30,7 +30,7 @@ void 	io_setout(t_cmd *cmd, int *out)
 		if (cmd->append_flag)
 			*out = open(cmd->outfile[i], O_WRONLY | O_APPEND | O_CREAT, 0644);
 		else
-			*out = open(cmd->outfile[i], O_WRONLY | O_CREAT, 0644);
+			*out = open(cmd->outfile[i], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 		if (*out < 0)
 			cmd_err(cmd->outfile[i], NULL, strerror(errno));
 		i++;
