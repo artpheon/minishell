@@ -29,6 +29,12 @@ void	exec_fork_only(t_sh *sh, t_cmd *cmd, t_io_params *p)
 	int		ret;
 
 	io_setout(cmd, &p->fdout);
+//	for (int i = 0; cmd->arg[i]; i++)
+//		printf("args: %s\n", cmd->arg[i]);
+//	for (int i = 0; cmd->infile[i]; i++)
+//		printf("ins: %s\n", cmd->arg[i]);
+//	for (int i = 0; cmd->outfile[i]; i++)
+//		printf("outs: %s\n", cmd->arg[i]);
 	dup2(p->fdin, STDIN_FILENO);
 	dup2(p->fdout, STDOUT_FILENO);
 	sh->background = fexec_cmd(sh, cmd->arg);
