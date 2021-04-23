@@ -63,6 +63,7 @@ typedef struct s_sh
 	t_dict		*envp;
 	int			running;
 	int			cmd_num;
+	int			check_null;
 	int			background;
 	char		**cmd_str;
 	t_fp_cmds	fexec_funcs[9];

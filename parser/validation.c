@@ -64,6 +64,8 @@ void	validation(t_sh *sh)
 	int	n;
 
 	n = 0;
+	if (sh->args[0] == NULL)
+		sh->check_null = 1;
 	if (sh->tok.quote != 0)
 		sh->ret_val = cmd_err(SHELL, NULL, "Syntax error: quotes");
 	while (sh->args[n])

@@ -38,14 +38,6 @@ void	lexer_main_cycle(t_sh *sh, const char *line)
 	sh->args[sh->tok.n] = NULL;
 }
 
-/*
- *  int n;
- *	n = -1;
- *	while(sh->args[++n])
- *	printf("arg[%d] =	%s\n",n , sh->args[n]);
- *	printf("arg[%d] =	%s\n",n , sh->args[n]);
- */
-
 void	lexer(t_sh *sh, const char *line)
 {
 	sh->args = malloc(sizeof(char *) * 1024);

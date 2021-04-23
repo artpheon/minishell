@@ -22,13 +22,14 @@ void	minishell(t_sh *sh)
 		set_input_mode(&t);
 		parser(sh);
 		unset_input_mode(&t);
-		if (sh->ret_val == 0)
+		if (sh->ret_val == 0 && sh->check_null == 0)
 			executor(sh);
 		else
 			sh->background = 258;
 		free_args(sh);
 		free_cmd(sh);
 		sh->ret_val = 0;
+		sh->check_null = 0;
 	}
 }
 

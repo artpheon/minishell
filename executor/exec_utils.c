@@ -38,6 +38,7 @@ char	*fexec_subtild(char *arg, char *path)
 
 void	shell_init(t_sh *sh, char **envp)
 {
+	sh->check_null = 0;
 	sh->tok.semicolon = 0;
 	sh->tok.line = 0;
 	sh->tok.line_start = 0;
