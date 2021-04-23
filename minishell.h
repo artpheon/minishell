@@ -166,7 +166,7 @@ void		exec_fork_last(t_sh *sh, t_cmd *cmd, t_io_params *p);
 void		exec_fork_only(t_sh *sh, t_cmd *cmd, t_io_params *p);
 void		exec_fork(t_sh *sh, t_cmd *cmd, t_io_params *p);
 void		exec_set__ext(t_dict **envp, char *arg);
-void		exec_set_(t_dict **envp, t_cmd **cmd);
+void		exec_set_(t_dict **envp, t_cmd *cmd);
 void		executor(t_sh *sh);
 char		*fexec_subtild(char *arg, char *path);
 int			fexec_seekp(char **args, char **path, t_dict *envp);
@@ -180,7 +180,6 @@ int			fexec_cmd_env(char **args, t_dict **envp);
 int			fexec_cmd_export(char **args, t_dict **envp);
 int			fexec_cmd_unset(char **args, t_dict **envp);
 int			fexec_cmd_pwd(char **args, t_dict **envp);
-int			fexec_cmd_yes(char **args, t_dict **envp);
 int			fexec_cmd_nelly(char **args, t_dict **envp);
 
 #endif

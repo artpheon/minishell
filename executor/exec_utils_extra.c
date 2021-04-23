@@ -59,19 +59,12 @@ void 	exec_set__ext(t_dict **envp, char *arg)
 	}
 }
 
-void	exec_set_(t_dict **envp, t_cmd **cmd)
+void	exec_set_(t_dict **envp, t_cmd *last)
 {
 	char	*arg;
-	t_cmd	*last;
 	int		i;
 
-	i = 0;
-	while (cmd[i])
-		++i;
-	last = cmd[i - 1];
 	i = (int)strlen_2(last->arg);
-	if (i == 0)
-		return ;
 	arg = ft_strdup(last->arg[i - 1]);
 	if (!arg)
 		cmd_err(SHELL, "variable _", strerror(errno));
