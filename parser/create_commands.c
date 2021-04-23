@@ -26,9 +26,7 @@ void	cmd_great(t_sh *sh, int *n, const int *k, int *i)
 int	cmd_less(t_sh *sh, int *n, const int *k, int *i)
 {
 	(*n)++;
-	if (*n < 2)
-		return (1);
-	sh->cmd[*k]->infile[sh->cmd[*k]->num_in] = sh->args[*n - 2];
+	sh->cmd[*k]->infile[sh->cmd[*k]->num_in] = sh->args[*n];
 	sh->cmd[*k]->num_in++;
 	if (sh->args[*n] == NULL)
 		(*n)--;
@@ -65,10 +63,7 @@ void	args_to_commands(t_sh *sh, int *n, int *k, int i)
 		if (!(ft_strcmp(sh->args[*n], "<GREAT>")))
 			cmd_great(sh, n, k, &i);
 		else if (!(ft_strcmp(sh->args[*n], "<LESS>")))
-		{
-			if (cmd_less(sh, n, k, &i))
-				continue ;
-		}
+			cmd_less(sh, n, k, &i);
 		else if (!(ft_strcmp(sh->args[*n], "<GREATGREAT>")))
 			cmd_greatgreat(sh, n, k, &i);
 		else

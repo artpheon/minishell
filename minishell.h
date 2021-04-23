@@ -18,7 +18,6 @@
 
 # define ECMD "Command not found"
 # define ESYNT "Syntax error near unexpected token"
-# define EXARG "Expected an argument"
 # define WRAR "Wrong argument"
 
 typedef struct s_tokens
@@ -32,7 +31,6 @@ typedef struct s_tokens
 	bool	slash;
 	bool	semicolon;
 	int		realloc_count;
-	int		realloc_count_n;
 	char	*line;
 	char	*line_start;
 }	t_tokens;
@@ -67,7 +65,7 @@ typedef struct s_sh
 	int			cmd_num;
 	int			background;
 	char		**cmd_str;
-	t_fp_cmds	fexec_funcs[10];
+	t_fp_cmds	fexec_funcs[9];
 	int			ret_val;
 }	t_sh;
 
@@ -99,6 +97,7 @@ void		shell_init_shlvl(t_dict **envp);
 void		shell_init_set_funcs(t_sh *sh);
 void		shell_init(t_sh *sh, char **envp);
 void		parser(t_sh *sh);
+void		shell_prompt(void);
 void		free_args(t_sh *sh);
 void		free_cmd(t_sh *sh);
 void		lexer(t_sh *sh, const char *line);
@@ -159,13 +158,15 @@ bool		export_valcheck(char *str);
 int			cmd_err(char *cmd, char *arg, char *err_txt);
 char		**ft_split_2(char *str, char c);
 void		io_init(t_io_params *p);
-void		io_setin(t_cmd *cmd, int *in);
+int			io_setin(t_cmd *cmd, int *in);
 void		io_setout(t_cmd *cmd, int *out);
 void		io_close(t_io_params *p);
 void		redir_streams(const int *in, const int *out);
 void		exec_fork_last(t_sh *sh, t_cmd *cmd, t_io_params *p);
 void		exec_fork_only(t_sh *sh, t_cmd *cmd, t_io_params *p);
 void		exec_fork(t_sh *sh, t_cmd *cmd, t_io_params *p);
+void		exec_set__ext(t_dict **envp, char *arg);
+void		exec_set_(t_dict **envp, t_cmd **cmd);
 void		executor(t_sh *sh);
 char		*fexec_subtild(char *arg, char *path);
 int			fexec_seekp(char **args, char **path, t_dict *envp);

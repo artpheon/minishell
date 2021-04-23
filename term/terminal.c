@@ -21,6 +21,8 @@ int	get_line_read(t_sh *sh, t_buffer *b)
 		return (term_c(b));
 	else if (b->symb[0] == '\n')
 		return (term_enter(b));
+	else if (!ft_isprint(b->symb[0]))
+		b->c -= b->l;
 	else
 		term_symbol(b);
 	b->c += b->l;

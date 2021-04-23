@@ -10,8 +10,7 @@ void	shell_init_set_funcs(t_sh *sh)
 	sh->fexec_funcs[5] = &fexec_cmd_export;
 	sh->fexec_funcs[6] = &fexec_cmd_unset;
 	sh->fexec_funcs[7] = &fexec_cmd_pwd;
-	sh->fexec_funcs[8] = &fexec_cmd_yes;
-	sh->fexec_funcs[9] = &fexec_cmd_nelly;
+	sh->fexec_funcs[8] = &fexec_cmd_nelly;
 	sh->cmd_str = malloc((sizeof(char *) * 11));
 	sh->cmd_str[0] = ft_strdup("cd");
 	sh->cmd_str[1] = ft_strdup("help");
@@ -21,9 +20,8 @@ void	shell_init_set_funcs(t_sh *sh)
 	sh->cmd_str[5] = ft_strdup("export");
 	sh->cmd_str[6] = ft_strdup("unset");
 	sh->cmd_str[7] = ft_strdup("pwd");
-	sh->cmd_str[8] = ft_strdup("yes");
-	sh->cmd_str[9] = ft_strdup("nelly");
-	sh->cmd_str[10] = NULL;
+	sh->cmd_str[8] = ft_strdup("nelly");
+	sh->cmd_str[9] = NULL;
 }
 
 char	*fexec_subtild(char *arg, char *path)

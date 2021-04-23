@@ -46,8 +46,10 @@ void	init_parser_params(t_sh *sh)
 
 void	shell_prompt(void)
 {
+	ft_putstr_fd("\x1B[1;32m", 1);
 	ft_putstr_fd(SHELL, 1);
-	ft_putstr_fd("\U0001F346>", 1);
+	ft_putstr_fd("$ ", 1);
+	ft_putstr_fd("\x1B[0m", 1);
 }
 
 void	parser(t_sh *sh)

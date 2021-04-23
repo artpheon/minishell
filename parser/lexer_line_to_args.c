@@ -16,7 +16,6 @@ int	line_to_args(t_sh *sh, const char *line)
 {
 	int	flag;
 
-	sh->tok.realloc_count_n = 1;
 	while (line[sh->tok.k])
 	{
 		flag = line_to_arg_qsl(sh, line);

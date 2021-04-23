@@ -1,11 +1,30 @@
 #include "minishell.h"
 
-int	fexec_cmd_env(char **args, t_dict **envp)
+int	fexec_cmd_echo(char **args, t_dict **envp)
 {
-	if (args[1] != NULL)
-		return (cmd_err("env", args[1], WRAR));
-	else
-		dict_print(envp, &prnt_keyisval);
+	int	w;
+	int	newln;
+
+	(void)envp;
+	newln = 1;
+	w = 1;
+	while (args[w])
+	{
+		if (ft_is_flag(args[w], 'n'))
+			break ;
+		w++;
+	}
+	if (w > 1)
+		newln = 0;
+	while (args[w])
+	{
+		ft_putstr_fd(args[w], STDOUT_FILENO);
+		w++;
+		if (args[w])
+			ft_putstr_fd(" ", STDOUT_FILENO);
+	}
+	if (newln)
+		ft_putendl_fd("", STDOUT_FILENO);
 	return (0);
 }
 

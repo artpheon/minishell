@@ -34,3 +34,47 @@ char	**ft_split_2(char *str, char c)
 	arr[2] = NULL;
 	return (arr);
 }
+
+void 	redir_streams(const int *in, const int *out)
+{
+	if (dup2(*in, STDIN_FILENO) == -1)
+		exit(cmd_err("dup2", "stdin", strerror(errno)));
+	if (dup2(*out, STDOUT_FILENO) == -1)
+		exit(cmd_err("dup2", "stdout", strerror(errno)));
+}
+
+void 	exec_set__ext(t_dict **envp, char *arg)
+{
+	char	*key;
+
+	if (dict_isin(envp, "_"))
+		dict_chval(envp, "_", arg);
+	else
+	{
+		key = ft_strdup("_");
+		if (!key)
+			cmd_err(SHELL, "variable _", strerror(errno));
+		else
+			dict_addentry(envp, dict_newentry(key, arg));
+	}
+}
+
+void	exec_set_(t_dict **envp, t_cmd **cmd)
+{
+	char	*arg;
+	t_cmd	*last;
+	int		i;
+
+	i = 0;
+	while (cmd[i])
+		++i;
+	last = cmd[i - 1];
+	i = (int)strlen_2(last->arg);
+	if (i == 0)
+		return ;
+	arg = ft_strdup(last->arg[i - 1]);
+	if (!arg)
+		cmd_err(SHELL, "variable _", strerror(errno));
+	else
+		exec_set__ext(envp, arg);
+}

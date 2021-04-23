@@ -1,5 +1,14 @@
 #include "minishell.h"
 
+int	fexec_cmd_env(char **args, t_dict **envp)
+{
+	if (args[1] != NULL)
+		return (cmd_err("env", args[1], WRAR));
+	else
+		dict_print(envp, &prnt_keyisval);
+	return (0);
+}
+
 int	fexec_cmd_unset(char **args, t_dict **envp)
 {
 	int	i;
@@ -29,24 +38,6 @@ int	fexec_cmd_pwd(char **args, t_dict **envp)
 		ft_putendl_fd(pwd, 1);
 	else
 		return (1);
-	return (0);
-}
-
-int	fexec_cmd_yes(char **args, t_dict **envp)
-{
-	char	*put;
-
-	(void)envp;
-	if (args[1])
-		put = args[1];
-	else
-		put = ft_strdup("y");
-	while (1)
-	{
-		ft_putendl_fd(put, 1);
-		if (!put)
-			break ;
-	}
 	return (0);
 }
 

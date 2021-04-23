@@ -21,26 +21,47 @@ static int	cmd_cd_success(t_dict **envp, char *pwd_old, char *arg)
 	return (0);
 }
 
+char	*fexec_cmd_cd_fix(char *arg, t_dict **envp, char *pwd_old)
+{
+	char	*new;
+
+	if (arg == NULL)
+		new = ft_strdup(dict_getval(envp, "HOME"));
+	else if (ft_strncmp(arg, "-", 2) == 0)
+	{
+		if (dict_isin(envp, "OLDPWD"))
+		{
+			new = ft_strdup(dict_getval(envp, "OLDPWD"));
+			ft_putendl_fd(new, 1);
+		}
+		else
+		{
+			free(pwd_old);
+			return (NULL);
+		}
+	}
+	else
+		new = fexec_subtild(arg, dict_getval(envp, "HOME"));
+	return (new);
+}
+
 int	fexec_cmd_cd(char **args, t_dict **envp)
 {
 	char	*pwd_old;
 	char	*arg;
 
-	if (args[1] != NULL)
+	pwd_old = getcwd(NULL, 0);
+	arg = fexec_cmd_cd_fix(args[1], envp, pwd_old);
+	if (arg == NULL)
+		return (cmd_err(SHELL, "cd", "OLDPWD not set"));
+	if (chdir(arg) != 0)
 	{
-		pwd_old = getcwd(NULL, 0);
-		arg = fexec_subtild(args[1], dict_getval(envp, "HOME"));
-		if (chdir(arg) != 0)
-		{
-			free(pwd_old);
-			free(arg);
-			return (cmd_err("cd", args[1], strerror(errno)));
-		}
-		else
-			return (cmd_cd_success(envp, pwd_old, arg));
+		free(pwd_old);
+		free(arg);
+		return (cmd_err("cd", args[1], strerror(errno)));
 	}
 	else
-		return (cmd_err("cd", NULL, EXARG));
+		return (cmd_cd_success(envp, pwd_old, arg));
 }
 
 int	fexec_cmd_help(char **args, t_dict **envp)
@@ -59,43 +80,14 @@ int	fexec_cmd_exit(char **args, t_dict **envp)
 	i = 0;
 	if (args[1] != NULL)
 	{
-		while (args[1][i])
+		if (ft_isdigit(args[1][0]) || args[1][0] == '-' || args[1][0] == '+')
+			i = ft_atoi(args[1]);
+		else
 		{
-			if (ft_isdigit(args[1][i]))
-				i++;
-			else
-				exit(cmd_err("exit", args[1], "numeric argument required"));
+			cmd_err("exit", args[1], "numeric argument required");
+			exit(255);
 		}
-		i = ft_atoi(args[1]);
 	}
 	ft_putendl_fd("exit", 1);
 	exit(i);
-}
-
-int	fexec_cmd_echo(char **args, t_dict **envp)
-{
-	int	w;
-	int	newln;
-
-	(void)envp;
-	newln = 1;
-	w = 1;
-	while (args[w])
-	{
-		if (ft_is_flag(args[w], 'n'))
-			break ;
-		w++;
-	}
-	if (w > 1)
-		newln = 0;
-	while (args[w])
-	{
-		ft_putstr_fd(args[w], STDOUT_FILENO);
-		w++;
-		if (args[w])
-			ft_putstr_fd(" ", STDOUT_FILENO);
-	}
-	if (newln)
-		ft_putendl_fd("", STDOUT_FILENO);
-	return (0);
 }

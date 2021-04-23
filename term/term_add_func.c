@@ -21,11 +21,15 @@ int	ft_putchar(int c)
 void	sig_handle(int signo)
 {
 	if (signo == SIGINT)
+	{
 		ft_putendl_fd("", 1);
-	else if (signo == SIGQUIT)
+	}
+	if (signo == SIGQUIT)
+	{
 		ft_putendl_fd("Quit: 3", 1);
-	else
-		exit(EXIT_SUCCESS);
+	}
+	if (signo == SIGTERM)
+		return ;
 }
 
 void	set_input_mode(struct termios *t)

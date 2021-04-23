@@ -17,7 +17,7 @@ void	term_d(t_buffer *b)
 	if (b->c == 0)
 	{
 		ft_putendl_fd("exit", 1);
-		exit(1);
+		exit(EXIT_SUCCESS);
 	}
 	write(1, "\007", 1);
 	b->c -= 1;

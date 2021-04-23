@@ -16,6 +16,10 @@ int	get_env_errno(t_sh *sh, const char *line)
 {
 	char	*str_errno;
 
+	if (sh->background == 256)
+		sh->background = 1;
+	if (sh->background == 512)
+		sh->background = 127;
 	str_errno = ft_itoa(sh->background);
 	ft_strlcat(sh->args[sh->tok.n], str_errno, 4096);
 	sh->tok.k++;
@@ -31,8 +35,6 @@ int	dollar_to_args(t_sh *sh, const char *line)
 	sh->args[sh->tok.n][sh->tok.i] = '$';
 	sh->args[sh->tok.n][sh->tok.i + 1] = line[sh->tok.k];
 	sh->tok.i++;
-	if (ft_isspace(line[sh->tok.k]) || line[sh->tok.k] == '\0')
-		return (0);
 	return (0);
 }
 
