@@ -2,15 +2,15 @@
 
 int	cmd_err(char *cmd, char *arg, char *err_txt)
 {
-	write(STDOUT_FILENO, cmd, ft_strlen(cmd));
-	write(STDOUT_FILENO, ": ", 2);
+	write(STDERR_FILENO, cmd, ft_strlen(cmd));
+	write(STDERR_FILENO, ": ", 2);
 	if (arg)
 	{
-		write(STDOUT_FILENO, arg, ft_strlen(arg));
-		write(STDOUT_FILENO, ": ", 2);
+		write(STDERR_FILENO, arg, ft_strlen(arg));
+		write(STDERR_FILENO, ": ", 2);
 	}
-	write(STDOUT_FILENO, err_txt, ft_strlen(err_txt));
-	write(STDOUT_FILENO, "\n", 1);
+	write(STDERR_FILENO, err_txt, ft_strlen(err_txt));
+	write(STDERR_FILENO, "\n", 1);
 	return (1);
 }
 
