@@ -88,6 +88,9 @@ void	executor(t_sh *sh)
 
 	i = 0;
 	command = sh->cmd[i];
+	if (exec_set_(&sh->envp, sh->cmd, sh->cmd_num))
+		return ;
+	args_to_low(sh->cmd, sh->cmd_num);
 	io_init(&p);
 	while (i < sh->cmd_num - 1)
 	{
@@ -99,6 +102,5 @@ void	executor(t_sh *sh)
 		exec_fork_only(sh, command, &p);
 	else
 		exec_fork_last(sh, command, &p);
-	exec_set_(&sh->envp, command);
 	io_close(&p);
 }

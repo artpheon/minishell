@@ -43,20 +43,21 @@ SRCS =	main.c \
 		executor/exec_commands_3.c \
 		executor/exec_cmd.c \
 		executor/exec_utils.c \
-		executor/exec_utils_extra.c \
+		executor/exec_utils_extra_1.c \
+		executor/exec_utils_extra_2.c \
 		executor/env_utils.c \
 		utils.c
 
 OBJS		=	$(SRCS:.c=.o)
 
-CC      	=   gcc
+CC      	=   clang
 
 %.o: %.c
 	$(CC) $(INC) $(CFLAGS) -g -c $< -o ${<:.c=.o}
 
 CFLAGS  	=   -Wall -Wextra -Werror
 
-LIBFT   	=   libft/libft.a
+LIBFT   	=   libft.a
 
 LTRMC		= -ltermcap
 
@@ -67,11 +68,11 @@ INC			=	-I. \
 all:	$(NAME)
 
 $(NAME): $(OBJS) $(HEADER) $(LIBFT)
-	$(CC) $(LIBFT) $(CFLAGS) $(OBJS) $(LTRMC) $(INC) -o $(NAME)
+	$(CC) $(CFLAGS) $(INC) $(OBJS) $(LTRMC) -L. $(LIBFT) -o $(NAME)
 
 
 $(LIBFT): 
-			make bonus -C libft
+			make bonus -C libft ; mv libft/libft.a .
 clean:	
 		make clean -C libft
 		rm -f $(OBJS)
@@ -79,6 +80,7 @@ clean:
 fclean: clean 
 		make fclean -C libft
 		rm -f $(NAME)
+		rm -f libft.a
 
 re:		fclean
 		make

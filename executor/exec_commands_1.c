@@ -26,7 +26,15 @@ char	*fexec_cmd_cd_fix(char *arg, t_dict **envp, char *pwd_old)
 	char	*new;
 
 	if (arg == NULL)
-		new = ft_strdup(dict_getval(envp, "HOME"));
+	{
+		if (dict_isin(envp, "HOME"))
+			new = ft_strdup(dict_getval(envp, "HOME"));
+		else
+		{
+			cmd_err(SHELL, "cd", "HOME not set");
+			return (NULL);
+		}
+	}
 	else if (ft_strncmp(arg, "-", 2) == 0)
 	{
 		if (dict_isin(envp, "OLDPWD"))
@@ -37,6 +45,7 @@ char	*fexec_cmd_cd_fix(char *arg, t_dict **envp, char *pwd_old)
 		else
 		{
 			free(pwd_old);
+			cmd_err(SHELL, "cd", "OLDPWD not set");
 			return (NULL);
 		}
 	}
@@ -53,7 +62,7 @@ int	fexec_cmd_cd(char **args, t_dict **envp)
 	pwd_old = getcwd(NULL, 0);
 	arg = fexec_cmd_cd_fix(args[1], envp, pwd_old);
 	if (arg == NULL)
-		return (cmd_err(SHELL, "cd", "OLDPWD not set"));
+		return (1);
 	if (chdir(arg) != 0)
 	{
 		free(pwd_old);

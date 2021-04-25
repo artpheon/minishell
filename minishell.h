@@ -3,6 +3,9 @@
 
 # include <stdio.h>
 # include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <signal.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -14,8 +17,10 @@
 # include "libft.h"
 # include "dict.h"
 
+# ifndef MAX_CANON
+#  define MAX_CANON 1024
+# endif
 # define SHELL "shell"
-
 # define ECMD "Command not found"
 # define ESYNT "Syntax error near unexpected token"
 # define WRAR "Wrong argument"
@@ -87,6 +92,7 @@ typedef struct s_buffer
 	int		l;
 }	t_buffer;
 
+int			g_signal;
 int			ft_putchar(int c);
 void		sig_handle(int signo);
 void		check_term(void);
@@ -153,6 +159,7 @@ int			ft_only_ch(char const *str, char c);
 int			ft_is_flag(char *args, char f);
 void		free_2(void *p);
 size_t		strlen_2(char **arr);
+void		wtolow(char **word);
 t_dict		*envp_to_dict(char **envp);
 char		**env_norm(t_dict **dict);
 bool		export_valcheck(char *str);
@@ -163,11 +170,12 @@ int			io_setin(t_cmd *cmd, int *in);
 void		io_setout(t_cmd *cmd, int *out);
 void		io_close(t_io_params *p);
 void		redir_streams(const int *in, const int *out);
+void		args_to_low(t_cmd **cmds, int num);
 void		exec_fork_last(t_sh *sh, t_cmd *cmd, t_io_params *p);
 void		exec_fork_only(t_sh *sh, t_cmd *cmd, t_io_params *p);
 void		exec_fork(t_sh *sh, t_cmd *cmd, t_io_params *p);
-void		exec_set__ext(t_dict **envp, char *arg);
-void		exec_set_(t_dict **envp, t_cmd *cmd);
+int			exec_set__ext(t_dict **envp, char *arg);
+int			exec_set_(t_dict **envp, t_cmd **cmd, int size);
 void		executor(t_sh *sh);
 char		*fexec_subtild(char *arg, char *path);
 int			fexec_seekp(char **args, char **path, t_dict *envp);

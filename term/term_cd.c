@@ -14,8 +14,15 @@
 
 void	term_d(t_buffer *b)
 {
+	struct termios t;
+
 	if (b->c == 0)
 	{
+		tcgetattr(0, &t);
+		t.c_lflag |= ECHO;
+		t.c_lflag |= ICANON;
+		t.c_lflag |= ISIG;
+		tcsetattr(0, TCSANOW, &t);
 		ft_putendl_fd("exit", 1);
 		exit(EXIT_SUCCESS);
 	}

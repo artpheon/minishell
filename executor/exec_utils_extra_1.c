@@ -43,7 +43,7 @@ void 	redir_streams(const int *in, const int *out)
 		exit(cmd_err("dup2", "stdout", strerror(errno)));
 }
 
-void 	exec_set__ext(t_dict **envp, char *arg)
+int	exec_set__ext(t_dict **envp, char *arg)
 {
 	char	*key;
 
@@ -53,21 +53,29 @@ void 	exec_set__ext(t_dict **envp, char *arg)
 	{
 		key = ft_strdup("_");
 		if (!key)
-			cmd_err(SHELL, "variable _", strerror(errno));
+			return (cmd_err(SHELL, "variable _", strerror(errno)));
 		else
 			dict_addentry(envp, dict_newentry(key, arg));
 	}
+	return (0);
 }
 
-void	exec_set_(t_dict **envp, t_cmd *last)
+int	exec_set_(t_dict **envp, t_cmd **cmd, int size)
 {
 	char	*arg;
+	t_cmd	*last;
 	int		i;
 
+	last = cmd[size - 1];
+	if (!last->arg)
+		return (1);
 	i = (int)strlen_2(last->arg);
+	if (i == 0)
+		return (1);
 	arg = ft_strdup(last->arg[i - 1]);
 	if (!arg)
-		cmd_err(SHELL, "variable _", strerror(errno));
-	else
-		exec_set__ext(envp, arg);
+		return (cmd_err(SHELL, "variable _", strerror(errno)));
+	if (exec_set__ext(envp, arg))
+		return (1);
+	return (0);
 }

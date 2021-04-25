@@ -41,3 +41,15 @@ size_t	strlen_2(char **arr)
 	}
 	return (size);
 }
+
+void	wtolow(char **word)
+{
+	int i;
+
+	i = 0;
+	while (word[0][i])
+	{
+		word[0][i] = ft_tolower(word[0][i]);
+		++i;
+	}
+}
