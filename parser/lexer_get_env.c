@@ -16,10 +16,13 @@ int	get_env_errno(t_sh *sh, const char *line)
 {
 	char	*str_errno;
 
+	sh->background = g_exitsig;
 	if (sh->background == 256)
 		sh->background = 1;
 	if (sh->background == 512)
 		sh->background = 127;
+	if (sh->background >= 256)
+		sh->background = sh->background >> 8;
 	str_errno = ft_itoa(sh->background);
 	ft_strlcat(sh->args[sh->tok.n], str_errno, 4096);
 	sh->tok.k++;

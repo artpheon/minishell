@@ -25,13 +25,15 @@ void	minishell(t_sh *sh)
 		if (sh->ret_val == 0 && sh->check_null == 0)
 			executor(sh);
 		else
-			sh->background = 258;
+			g_exitsig = 258;
 		free_args(sh);
 		free_cmd(sh);
 		sh->ret_val = 0;
 		sh->check_null = 0;
 	}
 }
+
+int g_exitsig = 0;
 
 int	main(int argc, char **argv, char **envp)
 {

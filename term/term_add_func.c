@@ -20,16 +20,20 @@ int	ft_putchar(int c)
 
 void	sig_handle(int signo)
 {
-	if (signo == SIGINT)
+	(void)signo;
+	wait(&g_exitsig);
+	if (g_exitsig == 2)
 	{
 		ft_putendl_fd("", 1);
+		g_exitsig = 130;
 	}
-	if (signo == SIGQUIT)
+	else if (g_exitsig == 3)
 	{
 		ft_putendl_fd("Quit: 3", 1);
+		g_exitsig = 131;
 	}
-	if (signo == SIGTERM)
-		return ;
+	else
+		g_exitsig = 0;
 }
 
 void	set_input_mode(struct termios *t)

@@ -92,7 +92,7 @@ typedef struct s_buffer
 	int		l;
 }	t_buffer;
 
-int			g_signal;
+extern int	g_exitsig;
 int			ft_putchar(int c);
 void		sig_handle(int signo);
 void		check_term(void);

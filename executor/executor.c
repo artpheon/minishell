@@ -19,7 +19,7 @@ void	exec_fork_last(t_sh *sh, t_cmd *cmd, t_io_params *p)
 		}
 		else if (pid < 0)
 			exit(cmd_err("fork", cmd->arg[0], strerror(errno)));
-		waitpid(pid, &sh->background, 0);
+		waitpid(pid, &g_exitsig, 0);
 	}
 	close(p->fdin);
 	close(p->fdout);
@@ -34,8 +34,8 @@ void	exec_fork_only(t_sh *sh, t_cmd *cmd, t_io_params *p)
 	{
 		io_setout(cmd, &p->fdout);
 		redir_streams(&p->fdin, &p->fdout);
-		sh->background = fexec_cmd(sh, cmd->arg);
-		if (sh->background == 2)
+		g_exitsig = fexec_cmd(sh, cmd->arg);
+		if (g_exitsig == 2)
 		{
 			pid = fork();
 			if (pid == 0)
@@ -45,7 +45,7 @@ void	exec_fork_only(t_sh *sh, t_cmd *cmd, t_io_params *p)
 			}
 			else if (pid < 0)
 				exit(cmd_err("fork", cmd->arg[0], strerror(errno)));
-			waitpid(pid, &sh->background, 0);
+			waitpid(pid, &g_exitsig, 0);
 		}
 	}
 	close(p->fdin);
@@ -73,7 +73,7 @@ void	exec_fork(t_sh *sh, t_cmd *cmd, t_io_params *p)
 		}
 		else if (pid < 0)
 			exit(cmd_err("fork", cmd->arg[0], strerror(errno)));
-		waitpid(pid, &sh->background, 0);
+		waitpid(pid, &g_exitsig, 0);
 	}
 	close(p->fdpipe[1]);
 	close(p->fdin);

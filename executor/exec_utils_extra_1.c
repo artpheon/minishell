@@ -47,6 +47,8 @@ int	exec_set__ext(t_dict **envp, char *arg)
 {
 	char	*key;
 
+	if (*envp == NULL)
+		*envp = dict_newentry(ft_strdup("_"), NULL);
 	if (dict_isin(envp, "_"))
 		dict_chval(envp, "_", arg);
 	else
