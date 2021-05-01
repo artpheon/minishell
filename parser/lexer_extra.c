@@ -38,7 +38,8 @@ int	double_slash(t_sh *sh, const char *line)
 	}
 	slash(sh);
 	if (sh->tok.quote_tmp == 2 && line[sh->tok.k]
-		!= '\\' && line[sh->tok.k] != '\"')
+		!= '\\' && line[sh->tok.k] != '\"'
+		&& line[sh->tok.k] != '$')
 	{
 		sh->args[sh->tok.n][sh->tok.i] = '\\';
 		sh->tok.i++;
